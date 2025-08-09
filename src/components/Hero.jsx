@@ -54,13 +54,13 @@ const Hero = () => {
           scrub: true,
         },
       })
-      .to(".right-leaf", { y: -240 }, 0)
-      .to(".left-leaf", { y: 240 }, 0);
+      .to(".right-leaf", { x: 100 }, 0)
+      .to(".left-leaf", { x: -100 }, 0);
 
     //Video scroll animation
     // Adjust start and end values based on screen size
-    const startValue = isMobile ? "top 10%" : "center 60%";
-    const endValue = isMobile ? "120% top" : "bottom top";
+    const startValue = isMobile ? "top 50%" : "center 60%";
+    const endValue = isMobile ? "bottom top" : "bottom top";
 
     // Create a timeline animation for the video element
     let videoTimeline = gsap.timeline({
