@@ -57,17 +57,7 @@ const Menu = () => {
   }, [currentIndex]);
 
   return (
-    <section id="menu" aria-labelledby="menu-heading">
-      <img
-        src="/images/slider-left-leaf.png"
-        alt="left-leaf"
-        id="m-left-leaf"
-      />
-      <img
-        src="/images/slider-right-leaf.png"
-        alt="right-leaf"
-        id="m-right-leaf"
-      />
+    <section id="menu" className="px-5" aria-labelledby="menu-heading">
 
       <h2 id="menu-heading" className="sr-only">
         Cocktail Menu

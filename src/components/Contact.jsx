@@ -10,6 +10,8 @@ const Contact = () => {
       scrollTrigger: {
         trigger: "#contact",
         start: "top center",
+        end: "bottom bottom",
+        scrub: true,
       },
       ease: "power1.inOut",
     });
@@ -25,34 +27,15 @@ const Contact = () => {
         yPercent: 100,
         stagger: 0.35,
       })
-      .to("#f-right-leaf", {
-        y: "-50",
-        duration: 1,
-        ease: "power1.inOut",
-      })
-      .to(
-        "#f-left-leaf",
-        {
-          y: "-50",
-          duration: 1,
-          ease: "power1.inOut",
-        },
-        "<"
-      );
   });
   return (
     <footer id="contact">
+      <img src="/images/cocktail-left-leaf.png" alt="l-leaf" id="c-left-leaf" />
       <img
-        src="/images/footer-right-leaf.png"
-        alt="leaf-right"
-        id="f-right-leaf"
+        src="/images/cocktail-right-leaf.png"
+        alt="r-leaf"
+        id="c-right-leaf"
       />
-      <img
-        src="/images/footer-left-leaf.png"
-        alt="leaf-left"
-        id="f-left-leaf"
-      />
-
       <section className="content">
         <h2>Where to Find Us</h2>
 
