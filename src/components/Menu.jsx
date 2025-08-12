@@ -73,13 +73,22 @@ const Menu = () => {
   }, [currentIndex]);
 
   return (
-    <section id="menu" className="px-5" aria-labelledby="menu-heading">
+    <section 
+      id="menu" 
+      className="px-5" 
+      aria-labelledby="menu-heading"
+      aria-describedby="menu-description"
+      role="region"
+    >
+      <div id="menu-description" className="sr-only">
+        Interactive cocktail carousel showing detailed recipes and information
+      </div>
 
       <h2 id="menu-heading" className="sr-only">
         Cocktail Menu
       </h2>
 
-      <nav className="cocktail-tabs" aria-label="Cocktail Navigation">
+      <nav className="cocktail-tabs" aria-label="Cocktail Navigation" role="tablist">
         {allCocktails.map((cocktail, index) => {
           const isActive = index === currentIndex;
 
@@ -90,6 +99,12 @@ const Menu = () => {
 				${isActive ? "text-white border-white" : "text-white/50 border-white/50"}
 			 `}
               onClick={() => goToSlide(index)}
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={`cocktail-panel-${index}`}
+              id={`cocktail-tab-${index}`}
+              tabIndex={isActive ? 0 : -1}
+              aria-label={`View ${cocktail.name} recipe`}
             >
               {cocktail.name}
             </button>
@@ -97,46 +112,57 @@ const Menu = () => {
         })}
       </nav>
 
-      <div className="content">
-        <div className="arrows">
+      <div className="content" role="tabpanel" id={`cocktail-panel-${currentIndex}`} aria-labelledby={`cocktail-tab-${currentIndex}`}>
+        <div className="arrows" role="group" aria-label="Carousel navigation">
           <button
             className="text-left"
             onClick={() => goToSlide(currentIndex - 1)}
+            aria-label={`Previous cocktail: ${prevCocktail.name}`}
+            disabled={isAnimating}
           >
-            <span>{prevCocktail.name}</span>
+            <span aria-hidden="true">{prevCocktail.name}</span>
             <img
               src="/images/right-arrow.png"
-              alt="right-arrow"
+              alt=""
               aria-hidden="true"
+              role="img"
             />
           </button>
 
           <button
             className="text-left"
             onClick={() => goToSlide(currentIndex + 1)}
+            aria-label={`Next cocktail: ${nextCocktail.name}`}
+            disabled={isAnimating}
           >
-            <span>{nextCocktail.name}</span>
+            <span aria-hidden="true">{nextCocktail.name}</span>
             <img
               src="/images/left-arrow.png"
-              alt="left-arrow"
+              alt=""
               aria-hidden="true"
+              role="img"
             />
           </button>
         </div>
 
         <div className="cocktail">
-          <img src={currentCocktail.image} className="object-contain" />
+          <img 
+            src={currentCocktail.image} 
+            className="object-contain"
+            alt={`${currentCocktail.name} cocktail`}
+            role="img"
+          />
         </div>
 
         <div className="recipe">
           <div ref={contentRef} className="info">
-            <p>Recipe for:</p>
-            <p id="title">{currentCocktail.name}</p>
+            <p aria-label="Recipe information label">Recipe for:</p>
+            <p id="title" aria-live="polite">{currentCocktail.name}</p>
           </div>
 
           <div className="details">
-            <h2>{currentCocktail.title}</h2>
-            <p>{currentCocktail.description}</p>
+            <h2 aria-live="polite">{currentCocktail.title}</h2>
+            <p aria-live="polite">{currentCocktail.description}</p>
           </div>
         </div>
       </div>

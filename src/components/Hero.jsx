@@ -82,46 +82,74 @@ const Hero = () => {
   }, []);
   return (
     <>
-      <section id="hero" className="noisy">
-        <h1 className="title">MASTERTAIL</h1>
+      <section 
+        id="hero" 
+        className="noisy"
+        role="banner"
+        aria-labelledby="hero-title"
+        aria-describedby="hero-description"
+      >
+        <h1 id="hero-title" className="title">MASTERTAIL</h1>
         <img
           src="/images/hero-left-leaf.png"
-          alt="left-leaf"
+          alt="Decorative mint leaf on the left side"
           className="left-leaf"
+          role="img"
+          aria-hidden="true"
         />
         <img
           src="/images/hero-right-leaf.png"
-          alt="right-leaf"
+          alt="Decorative mint leaf on the right side"
           className="right-leaf"
+          role="img"
+          aria-hidden="true"
         />
 
         <div className="body">
           <div className="content">
             <div className="space-y-5 hidden md:block">
-              <p>Cool. Crisp. Classic</p>
-              <p className="subtitle">
+              <p aria-label="Brand tagline">Cool. Crisp. Classic</p>
+              <p className="subtitle" role="text">
                 Sip the Spirit <br /> of summer
               </p>
             </div>
             <div className="view-cocktails">
-              <p className="subtitle">
+              <p id="hero-description" className="subtitle">
                 Every cocktail on our menu is a blend of premium ingredients,
                 creative flair, and timeless recipes — designed to delight your
                 senses.
               </p>
-              <a href="#cocktails">View cocktails</a>
+              <a 
+                href="#cocktails"
+                role="button"
+                aria-label="Navigate to cocktails menu section"
+                tabIndex="0"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    document.getElementById('cocktails')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                View cocktails
+              </a>
             </div>
           </div>
         </div>
       </section>
-      <div className="video absolute inset-0">
+      <div className="video absolute inset-0" role="img" aria-label="Background video showing cocktail preparation">
         <video
           ref={videoRef}
           src="/videos/output.mp4"
           muted
           playsInline
           preload="auto"
-        ></video>
+          aria-label="Decorative background video of cocktail making process"
+          role="img"
+        >
+          <track kind="captions" srcLang="en" label="English captions" />
+          Your browser does not support the video tag. Please upgrade to a modern browser to view this content.
+        </video>
       </div>
     </>
   );
