@@ -6,12 +6,16 @@ import gsap from "gsap";
 
 const Menu = () => {
   const contentRef = useRef();
+  const timelineRef = useRef();
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const totalCocktails = allCocktails.length;
 
   const goToSlide = (index) => {
+    if (isAnimating) return;
+    
     const newIndex = (index + totalCocktails) % totalCocktails;
     setCurrentIndex(newIndex);
   };
@@ -27,33 +31,45 @@ const Menu = () => {
   const nextCocktail = getCocktailAt(1);
 
   useGSAP(() => {
-    gsap.from("#title", {
-      opacity: 0,
-      duration: 1,
-      ease: "power1.inOut",
+    if (timelineRef.current) {
+      timelineRef.current.kill();
+    }
+
+    setIsAnimating(true);
+
+    timelineRef.current = gsap.timeline({
+      onComplete: () => setIsAnimating(false)
     });
 
-    gsap.from(".cocktail img", {
-      xPercent: -100,
-      duration: 1,
-      opacity: 0,
-      ease: "power1.inOut",
-    });
+    gsap.set("#title", { opacity: 0 });
+    gsap.set(".cocktail img", { y: -100, opacity: 0 });
+    gsap.set(".details h2", { yPercent: 100, opacity: 0 });
+    gsap.set(".details p", { yPercent: 100, opacity: 0 });
 
-    gsap.from(".details h2", {
-      yPercent: 100,
-      duration: 1,
-      opacity: 0,
-      ease: "power1.inOut",
-    });
-
-    gsap.from(".details p", {
-      yPercent: 100,
-      duration: 1,
-      opacity: 0,
-      ease: "power1.inOut",
-      delay: 0.5,
-    });
+    timelineRef.current
+      .to("#title", {
+        opacity: 1,
+        duration: 0.5,
+        ease: "power1.inOut",
+      })
+      .to(".cocktail img", {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        ease: "power1.inOut",
+      }, 0)
+      .to(".details h2", {
+        yPercent: 0,
+        opacity: 1,
+        duration: 0.5,
+        ease: "power1.inOut",
+      }, 0)
+      .to(".details p", {
+        yPercent: 0,
+        opacity: 1,
+        duration: 0.5,
+        ease: "power1.inOut",
+      }, 0.5);
   }, [currentIndex]);
 
   return (
